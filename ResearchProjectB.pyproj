@@ -23,6 +23,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="agents.py" />
+    <Compile Include="dockerfile">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="model.py" />
     <Compile Include="run.py">
       <SubType>Code</SubType>
@@ -32,6 +35,7 @@
     <InterpreterReference Include="CondaEnv|CondaEnv|JupyterMesa" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="requirements.txt" />
     <Content Include="Sleep Adaptation Analysis.ipynb" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
