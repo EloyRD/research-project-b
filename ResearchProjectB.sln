@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MesaTutorial", "..\PythonApplication2\MesaTutorial.pyproj", "{5F7FA480-268E-4AD4-887C-2A7FF2FB11DC}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ResearchProjectB", "ResearchProjectB.pyproj", "{8ABF1999-F253-4AF7-9318-5DACE36A24ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F7FA480-268E-4AD4-887C-2A7FF2FB11DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7FA480-268E-4AD4-887C-2A7FF2FB11DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ABF1999-F253-4AF7-9318-5DACE36A24ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ABF1999-F253-4AF7-9318-5DACE36A24ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BD0DB61-1494-44FA-9E76-1D408C920BD0}
+	EndGlobalSection
+EndGlobal
