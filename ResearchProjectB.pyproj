@@ -23,11 +23,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="agents.py" />
-    <Compile Include="dockerfile">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="model.py" />
-    <Compile Include="run.py">
+    <Compile Include="experiment.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -37,6 +34,9 @@
   <ItemGroup>
     <Content Include="requirements.txt" />
     <Content Include="Sleep Adaptation Analysis.ipynb" />
+    <Content Include="Testing a full run.ipynb" />
+    <Content Include="Testing the Fitness Evaluation Model.ipynb" />
+    <Content Include="Two Steps of One Run.ipynb" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -15,7 +15,7 @@ class Animal(Agent):
         self.food_energy    = 0
         self.hour_of_day    = 0
         self.circadian_rythm = genomearr
-        self.objective      = 'feeding'
+        self.objective      = 'eat'
         self.fitness_food   = .5
         self.fitness_sleep  = .5
         self.fitness        = .5
@@ -23,8 +23,8 @@ class Animal(Agent):
         self.lookingto      = None
         self.looking()
 
-        self.sleep_factor   = 1
-        self.food_factor    = 1
+        self.sleep_factor   = .5
+        self.food_factor    = .5
 
     def step(self):
         # Find hour of the day
@@ -44,15 +44,15 @@ class Animal(Agent):
         self.looking()
         
     def define_objective(self):
-        if self.circadian_rythm[self.hour_of_day] == 'sleeping' :
-            self.objective      = 'sleeping'
-        if self.circadian_rythm[self.hour_of_day] == 'feeding' :
-            self.objective      = 'feeding'
-        if self.circadian_rythm[self.hour_of_day] == 'flexible' :
+        if self.circadian_rythm[self.hour_of_day] == 'sleep' :
+            self.objective      = 'sleep'
+        if self.circadian_rythm[self.hour_of_day] == 'eat' :
+            self.objective      = 'eat'
+        if self.circadian_rythm[self.hour_of_day] == 'flex' :
             if self.fitness_sleep + .1 < self.fitness_food:
-                self.objective  = 'sleeping'
+                self.objective  = 'sleep'
             elif self.fitness_food + .1 < self.fitness_sleep:
-                self.objective  = 'feeding'
+                self.objective  = 'eat'
             else:
                 pass
 
@@ -61,11 +61,11 @@ class Animal(Agent):
         food        = [obj for obj in this_cell if isinstance(obj, FoodPatch)]
         sleep       = [obj for obj in this_cell if isinstance(obj, SleepPatch)]
 
-        if ( ( self.objective   == 'sleeping' )   and (len(sleep) > 0) ):
+        if ( ( self.objective   == 'sleep' )   and (len(sleep) > 0) ):
             self.sleep_energy   = self.sleep_energy + 3 * self.sleep_factor
             self.mode           = -10
             self.will_move      = False
-        elif ( ( self.objective   == 'feeding' )    and (len(food) > 0) ):
+        elif ( ( self.objective   == 'eat' )    and (len(food) > 0) ):
             self.food_energy    = self.food_energy  + (.2 * food[0].death_ticks) * self.food_factor
             food[0].death_ticks -= 1
             self.will_move      = False

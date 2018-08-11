@@ -19,7 +19,7 @@ class SleepAnimals(Model):
     number_food_patch = 40
     number_sleep_patch = 40
 
-    interdistance_factor = 0.4
+    interdistance_factor = 0.7
     intradistance_factor = 0.2
 
     ticks_to_death = 30
@@ -28,7 +28,7 @@ class SleepAnimals(Model):
     
     def __init__(self, model_id , genome, width = 40, height = 40, 
                  number_food_patch = 40, number_sleep_patch = 40,
-                 interdistance_factor = 0.35, intradistance_factor = 0.2):
+                 interdistance_factor = 0.7, intradistance_factor = 0.2):
         super().__init__()
         
         # Setting Parameters
