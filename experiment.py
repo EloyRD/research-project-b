@@ -61,3 +61,18 @@ def dataframe_generation(generation_number , generation_list):
     df  = pd.DataFrame(struc_array , index= index_row , columns= index_col)
 
     return df
+
+def displayRGB_generation(gen_id , top ,  gener_array):
+    RGBdisplay = np.full( (26, top, 3), 255 )
+    for i in range(top):
+        for k in range(24):
+            a = gener_array[gen_id - 1][i][2][k]
+            if a == 'sleep':
+                RGBdisplay[k+1][i]= [10, 150, 0   ]
+            if a == 'eat':
+                RGBdisplay[k+1][i]= [100, 0, 150 ]
+            if a == 'flex':
+                RGBdisplay[k+1][i]= [0, 250, 255 ]
+            else:
+                pass
+    return RGBdisplay

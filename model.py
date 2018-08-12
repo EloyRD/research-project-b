@@ -13,32 +13,32 @@ class SleepAnimals(Model):
     Analysis of the evolution of sleep in animals
     '''
 
-    height = 40
-    width = 40
-
-    number_food_patch = 40
-    number_sleep_patch = 40
-
-    interdistance_factor = 0.7
-    intradistance_factor = 0.2
-
-    ticks_to_death = 30
-
+    # Default values
+    width               = 40
+    height              = 40
     
-    
-    def __init__(self, model_id , genome, width = 40, height = 40, 
+    number_food_patch   = 40
+    number_sleep_patch  = 40
+
+    interdistance_factor    = 0.7
+    intradistance_factor    = 0.2
+
+    fp_depletion_tick   = 60
+        
+    def __init__(self, model_id , genome,width = 40, height = 40, 
                  number_food_patch = 40, number_sleep_patch = 40,
-                 interdistance_factor = 0.7, intradistance_factor = 0.2):
+                 interdistance_factor = 0.7, intradistance_factor = 0.2,
+                 fp_depletion = 60):
         super().__init__()
         
         # Setting Parameters
-        self.model_id = model_id
-        self.width = width
-        self.height = height
-        self.number_food_patch = number_food_patch
-        self.number_sleep_patch = number_sleep_patch
-        self.interdistance_factor = interdistance_factor
-        self.intradistance_factor = intradistance_factor
+        self.model_id               = model_id
+        self.width                  = width
+        self.height                 = height
+        self.number_food_patch      = number_food_patch
+        self.number_sleep_patch     = number_sleep_patch
+        self.interdistance_factor   = interdistance_factor
+        self.intradistance_factor   = intradistance_factor
 
         self.genome = genome
 
@@ -47,8 +47,10 @@ class SleepAnimals(Model):
         self.sp_center_x = 0
         self.sp_center_y = 0
 
-        self.current_id_food_patch = 0
+        self.current_id_food_patch  = 0
         self.current_id_sleep_patch = 0
+
+        self.fp_tick_to_depletion   = fp_depletion
 
         self.schedule = RandomActivation(self)
         self.grid = MultiGrid(self.width, self.height, torus = False)
@@ -115,9 +117,13 @@ class SleepAnimals(Model):
             if len(available_spots_food) < 80:
                 continue
             
-            list_centers_sp = list( set( self.grid.get_neighborhood(fp_center, False, False, self.interdistance + 1)) - set( self.grid.get_neighborhood(fp_center, False, False, self.interdistance - 1) ) )
-            if len(list_centers_sp) < 5:
-                continue
+            if self.interdistance > 0:
+                list_centers_sp = list( set( self.grid.get_neighborhood(fp_center, False, False, self.interdistance + 1) ) - 
+                                        set( self.grid.get_neighborhood(fp_center, False, False, self.interdistance - 1) ) )
+                if len(list_centers_sp) < 5:
+                    continue
+            else:
+                list_centers_sp = [(fp_center_x,fp_center_y)]
 
             sp_center = random.choice(list_centers_sp)
             (sp_center_x, sp_center_y) = sp_center
@@ -151,7 +157,7 @@ class SleepAnimals(Model):
             current_spot = random.choice(self.available_food_patches)
             if not self.grid.is_cell_empty(current_spot):
                 continue
-            food_patch = FoodPatch(self.next_id_foodpatch(), self, current_spot, SleepAnimals.ticks_to_death)
+            food_patch = FoodPatch(self.next_id_foodpatch(), self, current_spot, self.fp_tick_to_depletion)
             self.grid.place_agent(food_patch, current_spot)
             spot_found = True
 
@@ -173,14 +179,16 @@ class SleepAnimals(Model):
             if len(a) == 0:
                 RGBdisplay[x][y] = [255,255,255]
             elif len(a) == 1:
-                if isinstance(a[0], SleepPatch):
+                if      isinstance(a[0], SleepPatch):
                     RGBdisplay[x][y] = [100,0,150]
-                elif isinstance(a[0], FoodPatch):
+                elif    isinstance(a[0], FoodPatch):
                     RGBdisplay[x][y] = [10,150,0]
-                elif isinstance(a[0], Animal):
+                elif    isinstance(a[0], Animal):
                     RGBdisplay[x][y] = [0,0,0]
                 else:
                     pass
+            elif len(a) == 2:
+                RGBdisplay[x][y] = [0,0,0]
             else:
                 pass
         return RGBdisplay

@@ -7,7 +7,7 @@ class Animal(Agent):
     '''
     An animal that goes around looking for Food Patches and Sleep Patches,
     '''
-    def __init__(self, unique_id, model, pos, genomearr):
+    def __init__(self, unique_id, model, pos, genomearr, sleep_factor = 1, food_factor = 1):
         super().__init__(unique_id, model)
         self.pos            = pos
         self.direction      = random.randint(0,23)
@@ -23,8 +23,8 @@ class Animal(Agent):
         self.lookingto      = None
         self.looking()
 
-        self.sleep_factor   = .5
-        self.food_factor    = .5
+        self.sleep_factor   = sleep_factor
+        self.food_factor    = food_factor
 
     def step(self):
         # Find hour of the day
@@ -61,12 +61,15 @@ class Animal(Agent):
         food        = [obj for obj in this_cell if isinstance(obj, FoodPatch)]
         sleep       = [obj for obj in this_cell if isinstance(obj, SleepPatch)]
 
+        a   = self.model.fp_tick_to_depletion
+
+        
         if ( ( self.objective   == 'sleep' )   and (len(sleep) > 0) ):
             self.sleep_energy   = self.sleep_energy + 3 * self.sleep_factor
             self.mode           = -10
             self.will_move      = False
         elif ( ( self.objective   == 'eat' )    and (len(food) > 0) ):
-            self.food_energy    = self.food_energy  + (.2 * food[0].death_ticks) * self.food_factor
+            self.food_energy    = self.food_energy  + (fp_energyfactor(a) * food[0].death_ticks) * self.food_factor
             food[0].death_ticks -= 1
             self.will_move      = False
             self.mode           = 10
@@ -175,13 +178,13 @@ class FoodPatch(Agent):
     A patch with food
     '''
 
-    def __init__(self, unique_id, model, pos, death_ticks):
+    def __init__(self, unique_id, model, pos, depletion_ticks):
         '''
         Creates a new Food Patch
         '''
         super().__init__(unique_id, model)
         self.pos = pos
-        self.death_ticks = death_ticks
+        self.death_ticks = depletion_ticks
 
     def step(self):
         pass
@@ -199,3 +202,5 @@ class SleepPatch(Agent):
 
     def step(self):
         pass
+
+fp_energyfactor = lambda n: (3*n) / (n*(1+n)/2)

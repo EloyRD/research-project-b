@@ -1,0 +1,908 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Section One - Recreation of the Fitness Evaluation Model}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{research-project-b}{%
+\section{RESEARCH PROJECT B}\label{research-project-b}}
+
+Student: Mr Eloy Ruiz Donayre\\
+Supervisor: Prof Dr Achim Kehrein
+
+Reference Paper:\\
+\textgreater{} To sleep or not to sleep: the ecology of sleep in
+artificial organisms\\
+\textgreater{} Alberto Acerbi, Patrick McNamara and Charles L Nunn\\
+\textgreater{} https://doi.org/10.1186/1472-6785-8-10
+
+    \hypertarget{experiment-proposed-by-the-paper}{%
+\subsection{Experiment proposed by the
+paper}\label{experiment-proposed-by-the-paper}}
+
+The paper proposes the creation of artifical individuals with genetic
+encoding of its circadian rythm. This genetic enconding corresponds to
+24 genes that define the objective for each of the 24 hours of a day,
+said objectives could be
+\texttt{\textquotesingle{}to\ eat\textquotesingle{}},
+\texttt{\textquotesingle{}to\ sleep\textquotesingle{}},
+\texttt{\textquotesingle{}attend\ the\ need\ with\ lower\ satisfaction\textquotesingle{}}.
+The individual also has an food energy and sleep energy indicator.
+
+Each individual is located in a different grid, each consisting of an
+rectangular array of cells with hard boundaries. Each cell of the grid
+can be empty or contain one of two kind of resource agents:
+\texttt{Sleep\ patches} or \texttt{Food\ patches}.
+
+The agent roams in the grid with memory of its direction (every turn the
+direction can be modified by +15, 0, or -15 degrees), the roaming
+movement is of one cell by timestep with each timestep representing one
+minute. During this roaming movement, both energy and sleep energy are
+reduced.
+
+If the objective of the current hour of the day coincides with the
+resource available in the cell, the agent won't move and the
+corresponding energy indicator of the agent will be increased.
+
+For each experiment run, a population of a 100 individuals was created
+with random arrangement of genes and each individual was simulated for
+an ammount of timesteps representing 7 days. After this period, all the
+agents are ranked by the average of their sleep and food energies and
+the 20 fittest were selected as parents of the new population. Each
+parent produced 5 offsprings, and during (asexual) reproduction there
+was a chance (in the experiment, 5\% chance or 1 mutation in average per
+every 20 genes) of occurring a mutation of each gene. Each experiment
+run consisted of a 100 generations in the reference paper.
+
+    \hypertarget{characterization-of-the-environment}{%
+\subsubsection{Characterization of the
+environment}\label{characterization-of-the-environment}}
+
+The grid of each individual was set with a square shape of
+\texttt{40\ x\ 40\ cells} and populated with 40 sleep and 40 food
+patches.
+
+For the population process for each kind of resource a cluster of
+available locations is defined, and from each cluster a subgroup of
+location is randomly selected to put the required ammount of patches. To
+characterize the distance between clusters and the size of each cluster
+two variables are proposed: \texttt{intradistance} and
+\texttt{interdistance}.
+
+These are not exactly defined in the paper, so they were defined for
+this recreation in the following manner, taking in consideration the
+literature of simulation of automatas in grids (like Conway's Game of
+Life): \textgreater{} \texttt{interdistance}: this is the Manhattan
+distance between the centers of the clusters. \textgreater{}
+\texttt{intradistance}: this is the Manhattan size of the cluster, or
+the maximum Manhattan distance of any resource to the center of its
+cluster.
+
+As the landscapes that evaluate the fitness of each individual try to be
+statistically similar in each simulation but have different
+distributions of food and sleep patches, this constitutes a situation of
+dynamic landscapes. There is no mention of this aspect on the reference
+paper.
+
+    \hypertarget{energy-dynamics}{%
+\subsubsection{Energy dynamics}\label{energy-dynamics}}
+
+An important factor of the experiment is the energy lost in every
+roaming movement, and the energy acquired when a desired resource is
+reached. The paper mentions three important aspects about the resources:
+
+\begin{itemize}
+\tightlist
+\item
+  After calibration experiments, a ratio of 3:1 between energy won and
+  energy lost was stablished as adecuate.
+\item
+  The sleeping patches do not deplete.
+\item
+  The food patches deplete after a certain number of timesteps, and the
+  energy provided by them decrease linearly with each timestep of
+  exploitation.
+\end{itemize}
+
+There is no information about the exact ammounts of energy won and lost,
+so the following assumptions were made:
+
+\begin{itemize}
+\tightlist
+\item
+  The energy lost during roaming movement is of one unit of each kind.
+\item
+  The energy won from sleep patches is of three units.
+\item
+  The energy won from food patches is dependant on the
+  \texttt{depletion\ timesteps} indicated on the experiment. To clarify:
+  the energy obtained during the first exploitation timestep is higher
+  than the energy obtained in the last one, but the total energy that
+  can be obtained during the total existence of a food patch is the same
+  that can be obtained from a sleep patch during the same ammount of
+  timesteps.
+\end{itemize}
+
+    \hypertarget{fitness-evaluation}{%
+\subsubsection{Fitness evaluation}\label{fitness-evaluation}}
+
+A fitness value is calculated for each energy value of the individual
+through a sigmoid function: (1 + exp(-1/100 * energy) ) \^{} -1. In this
+way, the fitness is bound between 0 and 1.
+
+The fitness of the individual corresponds to the average of the sleep
+fitness and the food fitness.
+
+There is no discussion in the text about the appropriateness of the
+sigmoid function and in some point it is mentiones that in some
+experiment individuals with final fitness below 0.9 are discarded, in
+what seems a rather arbitrary decision.
+
+    \hypertarget{recreation-of-the-agent-based-model-for-fitness-evaluation}{%
+\subsection{Recreation of the Agent-Based Model for Fitness
+Evaluation}\label{recreation-of-the-agent-based-model-for-fitness-evaluation}}
+
+The recreation of the model was tried in pure C++ with the knowledge
+obtained from the module \texttt{Systems\ and\ organizations} but the
+handling of pointers proved too tedious.
+
+Through navigation in Agent-Based Simulation websites, I discovered the
+Mesa framework that tries to implement standard features for quick
+implementation of simulations in Python (similar to Repast in Java).
+
+For both situations, the approach is of Object Oriented Development
+(OOD) with each agent being an instance of a Class.
+
+    \hypertarget{model-setup}{%
+\subsection{Model setup}\label{model-setup}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        \PY{k+kn}{from} \PY{n+nn}{jupyterthemes} \PY{k}{import} \PY{n}{jtplot}
+        \PY{n}{jtplot}\PY{o}{.}\PY{n}{style}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}import seaborn as sns}
+        \PY{c+c1}{\PYZsh{}sns.set()}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{from} \PY{n+nn}{agents} \PY{k}{import} \PY{n}{Animal}\PY{p}{,} \PY{n}{FoodPatch}\PY{p}{,} \PY{n}{SleepPatch}
+        \PY{k+kn}{from} \PY{n+nn}{model} \PY{k}{import} \PY{n}{SleepAnimals}
+        
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{eat}\PY{l+s+s1}{\PYZsq{}} \PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sleep}\PY{l+s+s1}{\PYZsq{}} \PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{flex}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{p}{,} \PY{l+m+mi}{24}\PY{p}{)}
+        \PY{n}{a}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:} array(['eat', 'sleep', 'sleep', 'sleep', 'sleep', 'eat', 'flex', 'flex',
+               'sleep', 'flex', 'sleep', 'eat', 'sleep', 'sleep', 'eat', 'sleep',
+               'sleep', 'flex', 'eat', 'sleep', 'sleep', 'eat', 'sleep', 'flex'],
+              dtype='<U5')
+\end{Verbatim}
+            
+    Creation of three grids with three values of
+\texttt{interdistance\ factors} (0 , 0.35 and 0.7). The
+\texttt{interdistance} is calculated as the
+\texttt{interdistance\ factor} times
+\texttt{maximum\ Manhattan\ distance\ in\ the\ grid} (this is equal to
+the width plus the height of the grid)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{ground\PYZus{}1} \PY{o}{=} \PY{n}{SleepAnimals}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{genome}\PY{o}{=}\PY{n}{a}\PY{p}{,}  \PY{n}{width}\PY{o}{=}\PY{l+m+mi}{40}\PY{p}{,} \PY{n}{height}\PY{o}{=}\PY{l+m+mi}{40}\PY{p}{,} \PY{n}{interdistance\PYZus{}factor}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+        \PY{n}{ground\PYZus{}2} \PY{o}{=} \PY{n}{SleepAnimals}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{genome}\PY{o}{=}\PY{n}{a}\PY{p}{,}  \PY{n}{width}\PY{o}{=}\PY{l+m+mi}{40}\PY{p}{,} \PY{n}{height}\PY{o}{=}\PY{l+m+mi}{40}\PY{p}{,} \PY{n}{interdistance\PYZus{}factor}\PY{o}{=}\PY{l+m+mf}{0.35}\PY{p}{)}
+        \PY{n}{ground\PYZus{}3} \PY{o}{=} \PY{n}{SleepAnimals}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{genome}\PY{o}{=}\PY{n}{a}\PY{p}{,}  \PY{n}{width}\PY{o}{=}\PY{l+m+mi}{40}\PY{p}{,} \PY{n}{height}\PY{o}{=}\PY{l+m+mi}{40}\PY{p}{,} \PY{n}{interdistance\PYZus{}factor}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} Interdistance or Manhattan distance between centers of Patches regions, }
+        \PY{c+c1}{\PYZsh{} and intradistance or maximum Manhattan distance to center in each region}
+        \PY{p}{(} \PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{interdistance}\PY{p}{,} \PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{intradistance} \PY{p}{)}
+        \PY{p}{(} \PY{n}{ground\PYZus{}2}\PY{o}{.}\PY{n}{interdistance}\PY{p}{,} \PY{n}{ground\PYZus{}2}\PY{o}{.}\PY{n}{intradistance} \PY{p}{)}
+        \PY{p}{(} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{interdistance}\PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{intradistance} \PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} (0, 16)
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} (28, 16)
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} (56, 16)
+\end{Verbatim}
+            
+    \hypertarget{available-locations-or-clusters-for-food-and-sleep-patches}{%
+\subsubsection{Available locations (or clusters) for Food and Sleep
+patches}\label{available-locations-or-clusters-for-food-and-sleep-patches}}
+
+    For \texttt{ground\ 1} with interdistance = 0.
+
+Food patches in green and sleep patches in lila.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{available\PYZus{}spots} \PY{o}{=} \PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}clusters}\PY{p}{(}\PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)} \PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{available\PYZus{}spots}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{fp\PYZus{}center\PYZus{}x}\PY{p}{,} \PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{fp\PYZus{}center\PYZus{}y}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mew}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{sp\PYZus{}center\PYZus{}x}\PY{p}{,} \PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{sp\PYZus{}center\PYZus{}y}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mew}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} Coordinate of center of Food Patches Region}
+        \PY{p}{(}\PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{fp\PYZus{}center\PYZus{}x}\PY{p}{,} \PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{fp\PYZus{}center\PYZus{}y}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Coordinate of center of Sleep Patches Region}
+        \PY{p}{(}\PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{sp\PYZus{}center\PYZus{}x}\PY{p}{,} \PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{sp\PYZus{}center\PYZus{}y}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} (28, 10)
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} (28, 10)
+\end{Verbatim}
+            
+    For \texttt{ground\ 2} with interdistance = 0.35
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{available\PYZus{}spots} \PY{o}{=} \PY{n}{ground\PYZus{}2}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}clusters}\PY{p}{(}\PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)} \PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{available\PYZus{}spots}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ground\PYZus{}2}\PY{o}{.}\PY{n}{fp\PYZus{}center\PYZus{}x}\PY{p}{,} \PY{n}{ground\PYZus{}2}\PY{o}{.}\PY{n}{fp\PYZus{}center\PYZus{}y}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mew}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ground\PYZus{}2}\PY{o}{.}\PY{n}{sp\PYZus{}center\PYZus{}x}\PY{p}{,} \PY{n}{ground\PYZus{}2}\PY{o}{.}\PY{n}{sp\PYZus{}center\PYZus{}y}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mew}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    For \texttt{ground\ 3} with interdistance = 0.7
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{available\PYZus{}spots} \PY{o}{=} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}clusters}\PY{p}{(}\PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)} \PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{available\PYZus{}spots}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{fp\PYZus{}center\PYZus{}x}\PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{fp\PYZus{}center\PYZus{}y}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mew}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+        \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{sp\PYZus{}center\PYZus{}x}\PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{sp\PYZus{}center\PYZus{}y}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{mew}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{ms}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{first-population-of-food-and-sleep-patches}{%
+\subsubsection{First population of food and sleep
+patches}\label{first-population-of-food-and-sleep-patches}}
+
+    For \texttt{ground\ 1} with interdistance = 0.
+
+Food patches in green and sleep patches in lila. Individual in black.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{RGBdisplay} \PY{o}{=} \PY{n}{ground\PYZus{}1}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}display}\PY{p}{(}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)} \PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{RGBdisplay}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    For \texttt{ground\ 2} with interdistance = 0.35
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{RGBdisplay} \PY{o}{=} \PY{n}{ground\PYZus{}2}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}display}\PY{p}{(}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)} \PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{RGBdisplay}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    For \texttt{ground\ 3} with interdistance = 0.7
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{RGBdisplay} \PY{o}{=} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}display}\PY{p}{(}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)} \PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{RGBdisplay}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_27_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{display2D} \PY{o}{=} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{array2D\PYZus{}display}\PY{p}{(}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)} \PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{display2D}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{afmhot\PYZus{}r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{testing-movement-of-agent}{%
+\subsection{Testing movement of agent}\label{testing-movement-of-agent}}
+
+In this section, for the \texttt{ground\ 3} (interdistance factor = 0.7)
+the movement of the agent is tested.
+
+Five steps are executed and for each step it is shown:
+
+\begin{itemize}
+\tightlist
+\item
+  Timestep
+\item
+  Position(x,y)
+\item
+  Direction of movement (integer encoding, and translation)
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{time} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{pos} \PY{p}{,} 
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{direction} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{lookingto}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} (0, (22, 31))
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} (0, 'RIGHT')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{time} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{pos} \PY{p}{,} 
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{direction} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{lookingto}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} (1, (23, 31))
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} (1, 'RIGHT')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{time} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{pos} \PY{p}{,} 
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{direction} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{lookingto}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} (2, (24, 31))
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} (0, 'RIGHT')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{time} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{pos} \PY{p}{,} 
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{direction} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{lookingto}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} (3, (25, 31))
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} (0, 'RIGHT')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{time} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{pos} \PY{p}{,} 
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{direction} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{lookingto}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:} (4, (26, 31))
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:} (0, 'RIGHT')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{time} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{pos} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{direction} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{lookingto}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}19}]:} (5, (27, 31), 1, 'RIGHT')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{RGBdisplay} \PY{o}{=} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}display}\PY{p}{(}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)} \PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{RGBdisplay}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{testing-data-collection}{%
+\subsection{Testing data collection}\label{testing-data-collection}}
+
+Now, the simulation is run for 495 additional steps. Then, the grid is
+shown and the scatter plot of the Fitness.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{495}\PY{p}{)}\PY{p}{:}
+             \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{time} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{pos} \PY{p}{,} 
+         \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{direction} \PY{p}{,} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{schedule}\PY{o}{.}\PY{n}{agents}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{lookingto}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}22}]:} (500, (0, 0))
+\end{Verbatim}
+            
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}22}]:} (13, 'LEFT')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{RGBdisplay} \PY{o}{=} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}display}\PY{p}{(}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)} \PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{RGBdisplay}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_40_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{agents} \PY{o}{=} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{datacollector}\PY{o}{.}\PY{n}{get\PYZus{}agent\PYZus{}vars\PYZus{}dataframe}\PY{p}{(}\PY{p}{)}
+         \PY{n}{Agent1\PYZus{}fitness} \PY{o}{=} \PY{n}{agents}\PY{o}{.}\PY{n}{xs}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{level}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AgentID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{Agent1\PYZus{}fitness}\PY{o}{.}\PY{n}{Fitness}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_41_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Now, the simulation will be run for 3500, 3500, and 3000 steps, and the
+grid shown after each interval.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3500}\PY{p}{)}\PY{p}{:}
+             \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{RGBdisplay} \PY{o}{=} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}display}\PY{p}{(}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)} \PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{RGBdisplay}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_44_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3000}\PY{p}{)}\PY{p}{:}
+             \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{p}{)}
+         \PY{n}{RGBdisplay} \PY{o}{=} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}display}\PY{p}{(}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)} \PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{RGBdisplay}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_45_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3000}\PY{p}{)}\PY{p}{:}
+             \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{p}{)}
+         \PY{n}{RGBdisplay} \PY{o}{=} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{arrayRGB\PYZus{}display}\PY{p}{(}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)} \PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{swapaxes}\PY{p}{(}\PY{n}{RGBdisplay}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{origin} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lower}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_46_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    From the automated data collectors, information has been captured about
+the agent for each timestep. As an example, it is shown:
+
+\begin{itemize}
+\tightlist
+\item
+  Mode of the individual (10 represents \texttt{feeding\ mode}, -10 is
+  \texttt{sleeping\ mode}, and 0 is \texttt{roaming\ mode})
+\item
+  Fitness from food energy.
+\item
+  Fitnes from sleep energy.
+\item
+  Average fitness of the individual.
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{agents} \PY{o}{=} \PY{n}{ground\PYZus{}3}\PY{o}{.}\PY{n}{datacollector}\PY{o}{.}\PY{n}{get\PYZus{}agent\PYZus{}vars\PYZus{}dataframe}\PY{p}{(}\PY{p}{)}
+         \PY{n}{agent1\PYZus{}data} \PY{o}{=} \PY{n}{agents}\PY{o}{.}\PY{n}{xs}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{level}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AgentID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{agent1\PYZus{}data}\PY{o}{.}\PY{n}{Mode}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_48_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{agent1\PYZus{}data}\PY{o}{.}\PY{n}{Food\PYZus{}fitness}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_49_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{agent1\PYZus{}data}\PY{o}{.}\PY{n}{Sleep\PYZus{}fitness}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_50_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{agent1\PYZus{}data}\PY{o}{.}\PY{n}{Fitness}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_51_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
