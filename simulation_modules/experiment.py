@@ -6,8 +6,8 @@ import numpy as np
 import random
 import math
 
-from agents import Animal, FoodPatch, SleepPatch
-from model import SleepAnimals
+from .agents import Animal, FoodPatch, SleepPatch
+from .model import SleepAnimals
 
 ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(math.floor(n/10)%10!=1)*(n%10<4)*n%10::4])
 

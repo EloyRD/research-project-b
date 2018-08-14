@@ -6,7 +6,7 @@ from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
 from mesa.time import RandomActivation
 
-from agents import FoodPatch, SleepPatch, Animal
+from .agents import FoodPatch, SleepPatch, Animal
 
 class SleepAnimals(Model):
     '''

@@ -22,21 +22,19 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="agents.py" />
-    <Compile Include="model.py" />
-    <Compile Include="experiment.py">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|JupyterMesa" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="README.md" />
     <Content Include="requirements.txt" />
-    <Content Include="Sleep Adaptation Analysis.ipynb" />
-    <Content Include="Testing a full run.ipynb" />
-    <Content Include="Testing the Fitness Evaluation Model.ipynb" />
-    <Content Include="Two Steps of One Run.ipynb" />
+    <Content Include="Section One - Recreation of the Fitness Evaluation Model.ipynb" />
+    <Content Include="Section Three - Testing a Full Experiment %2815 steps%29.ipynb" />
+    <Content Include="Section Two - Step by step full run.ipynb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="agents.py" />
+    <Compile Include="experiment.py" />
+    <Compile Include="model.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
