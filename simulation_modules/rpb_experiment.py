@@ -1,3 +1,5 @@
+from pathlib import Path
+print('Running' if __name__ == '__main__' else 'Importing', Path(__file__).resolve())
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -6,8 +8,7 @@ import numpy as np
 import random
 import math
 
-from .agents import Animal, FoodPatch, SleepPatch
-from .model import SleepAnimals
+from itertools import groupby
 
 ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(math.floor(n/10)%10!=1)*(n%10<4)*n%10::4])
 
@@ -76,3 +77,17 @@ def displayRGB_generation(gen_id , top ,  gener_array):
             else:
                 pass
     return RGBdisplay
+
+def phases_in_genome(genome):
+    z = list( genome )
+    z = [ x[0] for x in groupby(z) ]
+    z = [ z[j] for j in range ( -2,len(z) ) ]
+    z = [ x[0] for x in groupby(z) ]
+
+    y = [(z[i],z[i+1],z[i+2]) for i in range( 0,len(z)-2) ]
+
+    a = y.count( ('eat', 'flex', 'eat') )
+    b = y.count( ('sleep', 'flex', 'sleep') )
+    c = y.count( ('sleep', 'flex', 'eat') ) + y.count( ('eat', 'flex', 'sleep') )
+
+    return (a,b,c)

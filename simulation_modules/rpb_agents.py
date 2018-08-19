@@ -1,3 +1,6 @@
+from pathlib import Path
+print('Running' if __name__ == '__main__' else 'Importing', Path(__file__).resolve())
+
 import random
 import numpy as np
 
@@ -15,13 +18,14 @@ class Animal(Agent):
         self.food_energy    = 0
         self.hour_of_day    = 0
         self.circadian_rythm = genomearr
-        self.objective      = 'eat'
+        self.objective      = 'sleep'
         self.fitness_food   = .5
         self.fitness_sleep  = .5
         self.fitness        = .5
         self.mode           = 0
         self.lookingto      = None
         self.looking()
+        self.minutes_asleep = 0
 
         self.sleep_factor   = sleep_factor
         self.food_factor    = food_factor
@@ -62,14 +66,14 @@ class Animal(Agent):
         sleep       = [obj for obj in this_cell if isinstance(obj, SleepPatch)]
 
         a   = self.model.fp_tick_to_depletion
-
-        
+                
         if ( ( self.objective   == 'sleep' )   and (len(sleep) > 0) ):
             self.sleep_energy   = self.sleep_energy + 3 * self.sleep_factor
             self.mode           = -10
             self.will_move      = False
+            self.minutes_asleep += 1
         elif ( ( self.objective   == 'eat' )    and (len(food) > 0) ):
-            self.food_energy    = self.food_energy  + (fp_energyfactor(a) * food[0].death_ticks) * self.food_factor
+            self.food_energy    = self.food_energy  + (3*  (fp_energyfactor(a) * food[0].death_ticks) ) * self.food_factor
             food[0].death_ticks -= 1
             self.will_move      = False
             self.mode           = 10
@@ -203,4 +207,4 @@ class SleepPatch(Agent):
     def step(self):
         pass
 
-fp_energyfactor = lambda n: (3*n) / (n*(1+n)/2)
+fp_energyfactor = lambda n: (n) / (n*(1+n)/2)
