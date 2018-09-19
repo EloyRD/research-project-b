@@ -8,3 +8,4 @@ Reference Paper:
 > https://doi.org/10.1186/1472-6785-8-10 
 
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/EloyRD/research-project-b/master)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1421964.svg)](https://doi.org/10.5281/zenodo.1421964)
